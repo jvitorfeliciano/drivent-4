@@ -37,7 +37,8 @@ async function findBookingByUserId(userId: number) {
     where: {
       userId,
     },
-    include: {
+    select: {
+      id: true,
       Room: true,
     },
   });
@@ -62,7 +63,7 @@ const bookingRepository = {
   findRoomById,
   findBooking,
   updateBooking,
-  findBookingByUserId
+  findBookingByUserId,
 };
 
 export default bookingRepository;

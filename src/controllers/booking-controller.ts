@@ -13,7 +13,7 @@ export async function postBooking(req: AuthenticatedRequest, res: Response) {
 
     res.status(httpStatus.OK).send(bookingId);
   } catch (err) {
-    if (err.name === "notFoundError") {
+    if (err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
     }
     return res.sendStatus(httpStatus.FORBIDDEN);
@@ -30,7 +30,7 @@ export async function updateBooking(req: AuthenticatedRequest, res: Response) {
 
     res.status(httpStatus.OK).send(bookingId);
   } catch (err) {
-    if (err.name === "notFoundError") {
+    if (err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
     }
     return res.sendStatus(httpStatus.FORBIDDEN);
@@ -42,10 +42,10 @@ export async function getUserBooking(req: AuthenticatedRequest, res: Response) {
 
   try {
     const booking = await bookingService.getUserBooking(userId);
-    
+
     res.status(httpStatus.OK).send(booking);
   } catch (err) {
-    if (err.name === "notFoundError") {
+    if (err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
     }
     return res.sendStatus(httpStatus.FORBIDDEN);
