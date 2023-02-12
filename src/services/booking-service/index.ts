@@ -27,7 +27,15 @@ async function validateRoom(roomId: number) {
     throw notFoundError();
   }
 
-  if (room.capacity === 0) {
+  if (room.Booking.length === room.capacity) {
+    throw forbiddenError();
+  }
+}
+
+async function validateUserBooking(userId: number, bookingId: number) {
+  const booking = await bookingRepository.findBooking(userId, bookingId);
+
+  if (!booking) {
     throw forbiddenError();
   }
 }
@@ -39,13 +47,21 @@ async function postBooking(userId: number, roomId: number) {
 
   const booking = await bookingRepository.createBooking(userId, roomId);
 
-  await bookingRepository.updateRoomCapacity(roomId);
+  return booking;
+}
+
+async function updateBooking(userId: number, roomId: number, bookingId: number) {
+  await validateUserBooking(userId, bookingId);
+  await validateRoom(roomId);
+
+  const booking = await bookingRepository.updateBooking(bookingId, roomId);
 
   return booking;
 }
 
 const bookingService = {
   postBooking,
+  updateBooking,
 };
 
 export default bookingService;
