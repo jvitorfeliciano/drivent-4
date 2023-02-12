@@ -59,9 +59,20 @@ async function updateBooking(userId: number, roomId: number, bookingId: number) 
   return booking;
 }
 
+async function getUserBooking(userId: number) {
+  const booking = await bookingRepository.findBookingByUserId(userId);
+
+  if (!booking) {
+    throw notFoundError();
+  }
+
+  return booking;
+}
+
 const bookingService = {
   postBooking,
   updateBooking,
+  getUserBooking
 };
 
 export default bookingService;
