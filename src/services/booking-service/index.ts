@@ -1,5 +1,4 @@
 import { forbiddenError, notFoundError } from "@/errors";
-import { cannotListHotelsError } from "@/errors/cannot-list-hotels-error";
 import bookingRepository from "@/repositories/booking-repository";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import ticketRepository from "@/repositories/ticket-repository";
@@ -7,7 +6,7 @@ import ticketRepository from "@/repositories/ticket-repository";
 async function validateEnrollment(userId: number) {
   const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
   if (!enrollment) {
-    throw notFoundError();
+    throw forbiddenError();
   }
   return enrollment;
 }
@@ -16,7 +15,7 @@ async function validateTicket(enrollmentId: number) {
   const ticket = await ticketRepository.findTicketByEnrollmentId(enrollmentId);
 
   if (!ticket || ticket.status === "RESERVED" || ticket.TicketType.isRemote || !ticket.TicketType.includesHotel) {
-    throw cannotListHotelsError();
+    throw forbiddenError();
   }
 }
 
@@ -72,7 +71,7 @@ async function getUserBooking(userId: number) {
 const bookingService = {
   postBooking,
   updateBooking,
-  getUserBooking
+  getUserBooking,
 };
 
 export default bookingService;

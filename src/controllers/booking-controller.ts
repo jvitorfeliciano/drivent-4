@@ -9,13 +9,14 @@ export async function postBooking(req: AuthenticatedRequest, res: Response) {
   const roomData = req.body as Pick<Booking, "roomId">;
 
   try {
-    const { id: bookingId } = await bookingService.postBooking(userId, roomData.roomId);
+    const { id } = await bookingService.postBooking(userId, roomData.roomId);
 
-    res.status(httpStatus.OK).send(bookingId);
+    res.status(httpStatus.OK).send({ bookingId: id });
   } catch (err) {
     if (err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
     }
+
     return res.sendStatus(httpStatus.FORBIDDEN);
   }
 }
