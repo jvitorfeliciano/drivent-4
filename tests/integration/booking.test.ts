@@ -7,10 +7,7 @@ import supertest from "supertest";
 import {
   createEnrollmentWithAddress,
   createUser,
-  createTicketType,
   createTicket,
-  createPayment,
-  generateCreditCardData,
   createTicketTypeWithHotel,
   createTicketTypeRemote,
   createHotel,
@@ -54,7 +51,7 @@ describe("GET /booking", () => {
   });
 
   describe("when token is valid", () => {
-    it("should respond with status 200 when user has a booking and one object with booking data", async () => {
+    it("should respond with status 200 and one object with booking data when user has a booking ", async () => {
       const user = await createUser();
       const token = await generateValidToken(user);
       const hotel = await createHotel();

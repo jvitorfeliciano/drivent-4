@@ -15,9 +15,9 @@ export async function postBooking(req: AuthenticatedRequest, res: Response) {
   } catch (err) {
     if (err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
+    } else if (err.name === "ForbiddenError") {
+      return res.sendStatus(httpStatus.FORBIDDEN);
     }
-
-    return res.sendStatus(httpStatus.FORBIDDEN);
   }
 }
 
@@ -33,8 +33,9 @@ export async function updateBooking(req: AuthenticatedRequest, res: Response) {
   } catch (err) {
     if (err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
+    } else if (err.name === "ForbiddenError") {
+      return res.sendStatus(httpStatus.FORBIDDEN);
     }
-    return res.sendStatus(httpStatus.FORBIDDEN);
   }
 }
 
@@ -48,7 +49,6 @@ export async function getUserBooking(req: AuthenticatedRequest, res: Response) {
   } catch (err) {
     if (err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
-    }
-    return res.sendStatus(httpStatus.FORBIDDEN);
+    } 
   }
 }
