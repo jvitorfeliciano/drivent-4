@@ -27,9 +27,9 @@ export async function updateBooking(req: AuthenticatedRequest, res: Response) {
   const bookingIdParams = Number(req.params.bookingId);
 
   try {
-    const { id: bookingId } = await bookingService.updateBooking(userId, roomData.roomId, bookingIdParams);
+    const { id } = await bookingService.updateBooking(userId, roomData.roomId, bookingIdParams);
 
-    res.status(httpStatus.OK).send(bookingId);
+    res.status(httpStatus.OK).send({ bookingId: id });
   } catch (err) {
     if (err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
